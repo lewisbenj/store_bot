@@ -742,53 +742,6 @@ client.on("messageCreate", async (message) => {
     }
 });
 
-// Xử lý sự kiện messageCreate với hai prefix (v và V)
-client.on('messageCreate', async (message) => {
-    // Kiểm tra cơ bản để tránh xử lý trùng lặp
-    if (message.author.bot || !message.content || message._handled) return;
-    message._handled = true; // Đánh dấu tin nhắn đã xử lý
-
-    // Định nghĩa và chuẩn hóa hai prefix
-    const prefixes = ['v', 'V'].map(p => p.toLowerCase());
-    const normalizedContent = message.content.toLowerCase();
-    const usedPrefix = prefixes.find(p => normalizedContent.startsWith(p));
-
-    if (!usedPrefix) return; // Thoát nếu không khớp prefix
-
-    // Kiểm tra và báo lỗi nếu dùng prefix V
-    if (message.content.trim().startsWith('V')) {
-        await message.reply({ content: 'Prefix không hợp lệ, vui lòng sử dụng `v` ' });
-        return;
-    }
-
-    // Phân tích lệnh và tham số
-    const args = message.content.slice(usedPrefix.length).trim().split(/ +/);
-    const commandName = args.shift()?.toLowerCase();
-
-    // Debug log để theo dõi
-    console.log(`Processing command: ${commandName} with prefix ${usedPrefix} from ${message.content}`);
-
-    // Thực thi lệnh nếu tồn tại
-    if (!commandName || !client.commands.has(commandName)) return;
-    try {
-        const command = client.commands.get(commandName);
-        let responseSent = false;
-        const originalExecute = command.execute;
-        command.execute = async (...args) => {
-            if (!responseSent) {
-                await originalExecute.call(command, ...args);
-                responseSent = true;
-            }
-        };
-        await command.execute(message, args);
-    } catch (error) {
-        console.error('Lỗi khi thực thi lệnh:', error);
-        if (!message._handled.replied) {
-            await message.reply({ content: 'Có lỗi khi thực thi lệnh!' });
-        }
-    }
-});
-
 // Interaction Handler
 client.on("interactionCreate", async (interaction) => {
     console.log("Interaction received:", interaction.customId); // Debug log
