@@ -40,7 +40,7 @@ A Discord bot designed to enhance your server with marriage, love points, and cu
 2. **Install Dependencies**:
    - Run the following command to install required Node.js packages:
      ```bash
-     npm install dotenv discord.js express
+     npm init -y && npm install dotenv discord.js express
      ```
    - This installs `dotenv` (for environment variables), `discord.js` (for Discord integration), and `express` (for potential server setup).
 
