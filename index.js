@@ -742,34 +742,6 @@ client.on("messageCreate", async (message) => {
     }
 });
 
-// Thêm sự kiện messageCreate để xử lý lệnh
-client.on('messageCreate', async (message) => {
-    // Chuyển prefix thành không phân biệt hoa thường
-    const normalizedPrefix = prefix.toLowerCase();
-    if (!message.content.toLowerCase().startsWith(normalizedPrefix)) return;
-    const args = message.content.slice(normalizedPrefix.length).trim().split(/ +/);
-    const commandName = args.shift().toLowerCase();
-
-    // Kiểm tra và thực thi lệnh
-    if (!client.commands.has(commandName)) return;
-    try {
-        const command = client.commands.get(commandName);
-        await command.execute(message, args);
-    } catch (error) {
-        console.error(error);
-        await message.reply({ content: 'Có lỗi khi thực thi lệnh!' });
-    }
-});
-
-// Định nghĩa commands như một Collection
-client.commands = new Collection();
-for (const [name, command] of Object.entries(commands)) {
-    client.commands.set(name, command);
-    if (command.aliases) {
-        command.aliases.forEach(alias => client.commands.set(alias, command));
-    }
-}
-
 // Interaction Handler
 client.on("interactionCreate", async (interaction) => {
     console.log("Interaction received:", interaction.customId); // Debug log
