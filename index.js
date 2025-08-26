@@ -757,7 +757,7 @@ client.on('messageCreate', async (message) => {
 
     // Kiểm tra và báo lỗi nếu dùng prefix V
     if (message.content.trim().startsWith('V')) {
-        await message.reply({ content: 'Prefix không hợp lệ, vui lòng sử dụng v' });
+        await message.reply({ content: 'Prefix không hợp lệ, vui lòng sử dụng `v` ' });
         return;
     }
 
