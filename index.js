@@ -218,7 +218,6 @@ const commands = {
     },
     
 
-
     mry: {
         aliases: ["vmry"],
         description: "Cầu hôn người khác",
@@ -279,8 +278,6 @@ const commands = {
                 await message.channel.send({ embeds: [successEmbed] });
                 return;
             }
-
-
 
             // Handle pending divorce
             const pendingDivorce = state.pendingDivorces.get(userId);
@@ -531,11 +528,11 @@ const commands = {
 
             const userId = message.author.id;
             let userBalance = 0;
-            if (item.currency === 'MC') {
+            if (item.currency === '<:mc_coin:1408468125984227360> (20K VNĐ)') {
                 userBalance = state.coins.get(userId) || 0;
                 if (userBalance < item.price) return message.reply({ embeds: [createErrorEmbed(`Bạn không đủ ${item.currency}! Cần ${item.price} ${item.currency}.`)] });
                 state.coins.set(userId, userBalance - item.price);
-            } else if (item.currency === 'owo') {
+            } else if (item.currency === 'OwO (3M <a:kt1_tienowo:1409437568122228787>)') {
                 userBalance = state.owo.get(userId) || 0;
                 if (userBalance < item.price) return message.reply({ embeds: [createErrorEmbed(`Bạn không đủ ${item.currency}! Cần ${item.price} ${item.currency}.`)] });
                 state.owo.set(userId, userBalance - item.price);
@@ -741,6 +738,8 @@ client.on("messageCreate", async (message) => {
         }
     }
 });
+
+
 
 // Interaction Handler
 client.on("interactionCreate", async (interaction) => {
